@@ -1,0 +1,10 @@
+Django>=5.1,<6
+wagtail>=6.4,<7
+djangorestframework>=3.15,<4
+djangorestframework-simplejwt>=5.3,<6
+drf-spectacular>=0.27,<1
+django-filter>=24.0,<27
+psycopg[binary]>=3.1,<4
+gunicorn>=22.0,<27
+whitenoise>=6.6,<7
+python-dotenv>=1.0,<2

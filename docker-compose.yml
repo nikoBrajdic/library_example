@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-dept_library}
+      POSTGRES_USER: ${POSTGRES_USER:-dept}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dept}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-dept} -d ${POSTGRES_DB:-dept_library}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build: .
+    ports:
+      - "${PORT:-8000}:8000"
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.production
+      SECRET_KEY: ${SECRET_KEY:-change-me-in-production-please}
+      DEBUG: ${DEBUG:-false}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1,web}
+      DATABASE_URL: postgres://${POSTGRES_USER:-dept}:${POSTGRES_PASSWORD:-dept}@db:5432/${POSTGRES_DB:-dept_library}
+      WAGTAILADMIN_BASE_URL: ${WAGTAILADMIN_BASE_URL:-http://localhost:8000}
+      RUN_SEED: ${RUN_SEED:-true}
+    volumes:
+      - media_data:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  media_data:

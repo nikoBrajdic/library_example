@@ -1,0 +1,30 @@
+# Django / Python
+*.pyc
+__pycache__/
+*.sqlite3
+db.sqlite3
+/media/
+/static/
+.env
+.venv/
+venv/
+*.egg-info/
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Local overrides
+config/settings/local.py
+
+# Personal / assessment source PDFs (not part of the runnable app)
+*.pdf
+
+library_example-main.zip
+
